@@ -1,6 +1,6 @@
-// if (process.env.NODE_ENV !== 'production') {
-//   require('dotenv').config();
-// }
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 const express = require('express');
 const cors = require('cors');
 const appRouter = require('./routes/index');
@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use('/api',appRouter);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
   console.log(`Serving on Port ${PORT}...`);
 });
