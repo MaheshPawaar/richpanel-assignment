@@ -1,14 +1,19 @@
-import { useState } from "react";
-import { BottomWarning } from "../components/BottomWarning";
-import { Button } from "../components/Button";
-import { Heading } from "../components/Heading";
-import { InputBox } from "../components/InputBox";
-import { RememberMe } from "../components/RememberMe";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BottomWarning } from '../components/BottomWarning';
+import { Button } from '../components/Button';
+import { Heading } from '../components/Heading';
+import { InputBox } from '../components/InputBox';
+import { RememberMe } from '../components/RememberMe';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isChecked, setIsChecked] = useState(false);
+  const [label, setLabel] = useState('Login');
+  const [rememberMe, setRememberMe] = useState(false);
+
+  const navigate = useNavigate();
 
   return (
     <div className="bg-[#1E4D91] h-screen flex justify-center">
@@ -33,18 +38,27 @@ export const Login = () => {
           </div>
           <div className="px-6 pt-4">
             <RememberMe
-              checked={isChecked}
+              checked={rememberMe}
               onChange={() => {
-                setIsChecked(!isChecked);
+                setRememberMe(!rememberMe);
               }}
             />
           </div>
           <div className="px-6 pt-6">
             <Button
-              onClick={() => {
-                alert('You Clicked Sign up button');
+              onClick={async () => {
+                setLabel('Logging in...');
+                const response = await axios.post(
+                  `https://richpanel-assignment-backend.onrender.com/api/user/signin`,
+                  {
+                    email,
+                    password,
+                  }
+                );
+                localStorage.setItem('token', response.data.token);
+                navigate('/connect-page');
               }}
-              label={'Login'}
+              label={label}
             />
           </div>
           <div className="py-1">
