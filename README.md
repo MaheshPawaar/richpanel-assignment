@@ -1,3 +1,3 @@
 # Richpanel Assignment
 
-Deployment URL: 
+Deployment URL: https://richpanel-assignment-eta.vercel.app/
